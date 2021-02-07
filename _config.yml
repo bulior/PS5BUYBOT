@@ -1,1 +1,8 @@
 theme: jekyll-theme-hacker
+
+$ github-linguist --breakdown
+68.57%  Ruby
+22.90%  C
+6.93%   Go
+1.21%   Lex
+0.39%   Shell
