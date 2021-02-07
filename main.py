@@ -1,4 +1,4 @@
-# V1.62
+# V1.72
 # BuyBot PS5 - Auto Buy on Amazon
 # https://github.com/bulior/PS5BUYBOT
 # -------------------------------------
