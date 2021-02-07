@@ -8,18 +8,18 @@ It is not cleanly programmed but works very well. I am always open for feedback
 
 # ----- Instruction ------
 
-1. Download 
-    - main.py and config.ini file
+1. Download <br>
+    - main.py and config.ini file<br><br>
     
-2. Setup
-    2.1 install ChromeDriver for Chromebrowser:
-        https://www.youtube.com/watch?v=dz59GsdvUF8
-    2.2 install all Libs:
-        - SELENIUM
-        - PYTHON-TELEGRAM-BOT
-        - TERMCOLOR
+2. Setup<br>
+    2.1 install ChromeDriver for Chromebrowser:<br>
+        https://www.youtube.com/watch?v=dz59GsdvUF8<br>
+    2.2 install all Libs:<br>
+        - SELENIUM<br>
+        - PYTHON-TELEGRAM-BOT<br>
+        - TERMCOLOR<br>
         
-3. PreConfig:
+3. PreConfig:<br>
    Edit config.ini
     - Telegram
       - Bot Token
