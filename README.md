@@ -47,6 +47,10 @@ If the Item is in stock, the bot will inform you and on Amazon the bot will add 
 On every step the Bot will send you screenshots:<br>
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/JKBw1Vh/2021-02-07-10-37-02-Window.png" alt="2021-02-07-10-37-02-Window" border="0"></a><br><br>
 
+If you buy it:<br>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/BgrygFK/2021-02-07-10-41-49-Window.png" alt="2021-02-07-10-41-49-Window" border="0"></a><br><br>
+
+
 
 <a href="https://www.paypal.com/donate?hosted_button_id=3S68EYYDSLM8W">
   <img src="https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png" alt="Donate with PayPal" />
