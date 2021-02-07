@@ -1,7 +1,8 @@
 # PS5BUYBOT
 Python PS5 Web crawler with auto buy
 
-This one easy way to check differnt Sides to buy e.g. the PS5 / PS5 digi
+This one easy way to check differnt Retailer websides to buy e.g. the PS5 / PS5 digi.<br>
+It is not cleanly programmed but works very well. I am always open for feedback
 
 
 # ----- Instruction ------
