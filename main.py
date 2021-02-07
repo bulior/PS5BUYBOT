@@ -1,7 +1,10 @@
 # V1.4
 # BuyBot PS5 - Auto Buy on Amazon
 # https://github.com/bulior/PS5BUYBOT
+# -------------------------------------
 # If you change something, let me know ;)
+# -------------------------------------
+
 
 import random
 import time
