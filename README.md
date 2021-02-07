@@ -1,9 +1,9 @@
 # PS5BUYBOT
-Python PS5 Web crawler with auto buy option
-Version 1.2 2021-02
+Python PS5 Web crawler with auto buy option<br>
+Version 1.2 2021-02<br>
 
-This one easy way to check differnt Retailer websides to buy e.g. the PS5 / PS5 digi.<br>
-It is not cleanly programmed but works very well. I am always open for feedback
+This is one easy way to check differnt Retailers and buy automaticly e.g. the PS5 / PS5 digi.<br>
+It is not cleanly programmed but works for me very well. I am always open for feedback ;)<br>
 
 
 # ----- Instruction ------
@@ -37,16 +37,16 @@ It is not cleanly programmed but works very well. I am always open for feedback
 Telegram notification on Startup:<br>
 <a href="https://i.ibb.co/mN41Kjv/2021-02-07-10-23-45-Window.png"><img src="https://i.ibb.co/mN41Kjv/2021-02-07-10-23-45-Window.png" alt="2021-02-07-10-23-45-Window" border="0"></a><br><br>
 
-get status with telegram:<br>
-Until now you must send an /end option to stop  status messaging
+get status updates with telegram:<br>
+Until now you must send an /end option to stop status messaging<br>
 <a href="https://i.ibb.co/qp4yQWK/2021-02-07-10-27-30-Window.png"><img src="https://i.ibb.co/qp4yQWK/2021-02-07-10-27-30-Window.png" alt="2021-02-07-10-27-30-Window" border="0"></a><br><br>
 
-python terminal looks like this while running:<br>
+python terminal looks like this:<br>
 <a href="https://i.ibb.co/xFnWyGt/2021-02-07-10-29-01-Window.png"><img src="https://i.ibb.co/xFnWyGt/2021-02-07-10-29-01-Window.png" alt="2021-02-07-10-29-01-Window" border="0"></a><br><br>
 
-If the Item is in stock, the bot will inform you and on Amazon the bot will add it to your basket and will automaticly log in<br>
-On every step the Bot will send you screenshots.<br><br>
-An example purchase - PS5 controller:<br>
+If the Item is in stock, the bot will inform you and on Amazon the bot will add it to your basket, will automaticly log in, will inform you with price tag and ask to buy:<br>
+For every step you will receive screenshots.<br><br>
+An example purchase looks like this:<br>
 <a href="https://i.ibb.co/JKBw1Vh/2021-02-07-10-37-02-Window.png"><img src="https://i.ibb.co/JKBw1Vh/2021-02-07-10-37-02-Window.png" alt="2021-02-07-10-37-02-Window" border="0"></a><br><br>
 
 If you buy it:<br>
