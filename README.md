@@ -44,7 +44,8 @@ python terminal looks like this while running:<br>
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/xFnWyGt/2021-02-07-10-29-01-Window.png" alt="2021-02-07-10-29-01-Window" border="0"></a><br><br>
 
 If the Item is in stock, the bot will inform you and on Amazon the bot will add it to your basket and will automaticly log in<br>
-On every step the Bot will send you screenshots:<br>
+On every step the Bot will send you screenshots.<br><br>
+An example purchase from a controller:<br>
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/JKBw1Vh/2021-02-07-10-37-02-Window.png" alt="2021-02-07-10-37-02-Window" border="0"></a><br><br>
 
 If you buy it:<br>
