@@ -43,7 +43,9 @@ Until now you must send an /end option to stop  status messaging
 python terminal looks like this while running:<br>
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/xFnWyGt/2021-02-07-10-29-01-Window.png" alt="2021-02-07-10-29-01-Window" border="0"></a><br><br>
 
-Item is in stock and the bot will inform you or will buy it directly on Amazon:<br>
+If the Item is in stock, the bot will inform you and on Amazon the bot will add it to your basket and will automaticly log in<br>
+On every step the Bot will send you screenshots:<br>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/JKBw1Vh/2021-02-07-10-37-02-Window.png" alt="2021-02-07-10-37-02-Window" border="0"></a><br><br>
 
 
 <a href="https://www.paypal.com/donate?hosted_button_id=3S68EYYDSLM8W">
