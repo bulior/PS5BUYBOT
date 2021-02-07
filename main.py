@@ -1,5 +1,5 @@
 # V1.4
-# BuyBot
+# BuyBot PS5
 
 import random
 import time
