@@ -3,7 +3,6 @@
 # https://github.com/bulior/PS5BUYBOT
 # If you change something, let me know ;)
 
-
 import random
 import time
 from selenium import webdriver
