@@ -47,9 +47,7 @@ python terminal looks like this:<br>
 If the Item is in stock, the bot will inform you and on Amazon the bot will add it to your basket, will automaticly log in, will inform you with price tag and ask to buy.
 For every step you will receive screenshots.<br><br>
 An example purchase looks like this:<br>
-<a href="https://i.ibb.co/JKBw1Vh/2021-02-07-10-37-02-Window.png"><img src="https://i.ibb.co/JKBw1Vh/2021-02-07-10-37-02-Window.png" alt="2021-02-07-10-37-02-Window" border="0"></a><br><br>
-
-If you buy it:<br>
+<a href="https://i.ibb.co/JKBw1Vh/2021-02-07-10-37-02-Window.png"><img src="https://i.ibb.co/JKBw1Vh/2021-02-07-10-37-02-Window.png" alt="2021-02-07-10-37-02-Window" border="0"></a><br>
 <a href="https://i.ibb.co/BgrygFK/2021-02-07-10-41-49-Window.png"><img src="https://i.ibb.co/BgrygFK/2021-02-07-10-41-49-Window.png" alt="2021-02-07-10-41-49-Window" border="0"></a><br><br>
 
 
