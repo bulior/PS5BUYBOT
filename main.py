@@ -1,9 +1,10 @@
-# V1.70
+# V1.8
 # BuyBot PS5 - Auto Buy on Amazon
 # https://github.com/bulior/PS5BUYBOT
 # -------------------------------------
 # If you change something, let me know ;)
 # -------------------------------------
+
 
 import random
 import time
@@ -166,7 +167,7 @@ def stopping(update: Update, context: CallbackContext, browser_runnging) -> int:
     if debugging:
         print(browser_runnging)
     if browser_runnging == True:
-        print("STOP BROWSER")
+        print("STOPPE BROWSER")
         browser.quit()  # close browser
         browser_runnging = False
         msg = "Closed! Re /start ?"
@@ -183,7 +184,7 @@ def amazon_query(update: Update, context: CallbackContext, status_avail):
     text4 = "Wählen Sie eine Lieferadresse"
 
     browser.get("https://amzn.to/2HtaCXP")
-    time.sleep(1)
+    time.sleep(0.2)
     ps5digi = browser.find_element_by_xpath('//button[normalize-space()="PS5"]')
     ps5digi.click()
     time.sleep(1.8)
@@ -285,7 +286,7 @@ def amazon_query2(update: Update, context: CallbackContext, status_avail):
     text4 = "Wählen Sie eine Lieferadresse"
 
     browser.get("https://amzn.to/33yATep")
-    time.sleep(1)
+    time.sleep(0.2)
     ps5normal = browser.find_element_by_xpath('//button[normalize-space()="PS5 - Digital Edition"]')
     ps5normal.click()
     time.sleep(1.6)
@@ -411,6 +412,72 @@ def mediamarkt_query(update: Update, context: CallbackContext):
         if status_avail == True:
             tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digital [Mediamarkt] - Unavailable")
 
+def saturn_query(update: Update, context: CallbackContext):
+    text = "Dieser Artikel ist aktuell nicht verfügbar"
+    text2 = "add to card"
+    text3 = "Choose a delivery address"
+    text4 = "Wählen Sie eine Lieferadresse"
+    browser.get("http://bit.ly/SaturnPS5")
+    if not(text in browser.page_source) or (text2 in browser.page_source):
+        now = datetime.now()
+        timenow = now.strftime("%H-%M-%S: ")
+        print(colored(timenow, "blue") + colored("PS5 Disc [Saturn] Available!!!!", "green"))
+        cookies = browser.find_element_by_xpath('// * [ @ id = "privacy-layer-accept-all-button"]')
+        cookies.click()
+        preis = browser.find_element_by_xpath('//*[@id="root"]/div[2]/div[3]/div[1]/div/div[4]/div/div/div[1]/div/div/div/div/div/div[2]/div[2]/span[2]').text
+        addtocard = browser.find_element_by_xpath('//*[@id="pdp-add-to-cart-button"]')
+        addtocard.click()
+        timenow = now.strftime("%H-%M-%S")
+        imagename1 = timenow + "img.png"
+        browser.save_screenshot(imagename1)
+        tg_bot.send_message(chat_id=tgcid, text="#PS5 Disc [Saturn] Available!!!!")
+        tg_bot.send_document(chat_id=tgcid, document=open(imagename1, "rb"))
+        tg_bot.send_message(chat_id=tgcid, text="http://bit.ly/SaturnPS5")
+
+        while True:
+            time.sleep(1)
+            print("waiting")
+
+    else:
+        now = datetime.now()
+        timenow = now.strftime("%H-%M-%S: ")
+        print(colored(timenow, "blue") + colored("PS5 Disc [SATURN] Unavailable", "red"))
+        if status_avail == True:
+            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Disc [Saturn] - Unavailable")
+
+def saturn2_query(update: Update, context: CallbackContext):
+    text = "Dieser Artikel ist aktuell nicht verfügbar"
+    text2 = "add to card"
+    text3 = "Choose a delivery address"
+    text4 = "Wählen Sie eine Lieferadresse"
+    browser.get("https://bit.ly/35ZvzDD")
+    if not(text in browser.page_source) or (text2 in browser.page_source):
+        now = datetime.now()
+        timenow = now.strftime("%H-%M-%S: ")
+        print(colored(timenow, "blue") + colored("PS5 Digital [Saturn] Available!!!!", "green"))
+        cookies = browser.find_element_by_xpath('// * [ @ id = "privacy-layer-accept-all-button"]')
+        cookies.click()
+        preis = browser.find_element_by_xpath('//*[@id="root"]/div[2]/div[3]/div[1]/div/div[4]/div/div/div[1]/div/div/div/div/div/div[2]/div[2]/span[2]').text
+        addtocard = browser.find_element_by_xpath('//*[@id="pdp-add-to-cart-button"]')
+        addtocard.click()
+        timenow = now.strftime("%H-%M-%S")
+        imagename1 = timenow + "img.png"
+        browser.save_screenshot(imagename1)
+        tg_bot.send_message(chat_id=tgcid, text="#PS5 Digital [Saturn] Available!!!!")
+        tg_bot.send_document(chat_id=tgcid, document=open(imagename1, "rb"))
+        tg_bot.send_message(chat_id=tgcid, text="http://bit.ly/SaturnPS5")
+
+        while True:
+            time.sleep(1)
+            print("waiting")
+
+    else:
+        now = datetime.now()
+        timenow = now.strftime("%H-%M-%S: ")
+        print(colored(timenow, "blue") + colored("PS5 Digital [SATURN] Unavailable", "red"))
+        if status_avail == True:
+            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digital [Saturn] - Unavailable")
+
 def otto_query(update: Update, context: CallbackContext):
     text = "Aktuell ist die PlayStation 5 auf otto.de leider ausverkauft"
     browser.get("https://www.otto.de/technik/gaming/playstation/ps5/")
@@ -467,12 +534,12 @@ def gamestop_query(update: Update, context: CallbackContext):
 # ---- Amazon item in stock ---
 def amazon_instock_info(update: Update, context: CallbackContext, preis) -> int:
     # Welcome message
-    msg = "Playstaion 5 available !\n"
+    msg = "Playstaion 5 verfügbar !\n"
     msg += "Preis: "
     msg += preis
     msg += " \n"
-    msg += "Item was added to basked\n"
-    msg += "Shall i arrange the purchase for you?\n\n"
+    msg += "Artikel wurde zum Warenkorb hinzugefügt\n"
+    msg += "Soll ich den Kauf abschließen?\n\n"
     msg += "/buy - let's play 🎮\n"
     msg += "/cancel - mimimi 😒\n\n"
     # Commands menu
@@ -514,11 +581,15 @@ while v == 1:
                         status_avail = True
                         tg_bot.send_message(chat_id=tgcid, text=f"Status: n= {a} /end messaging")
                     amazon_query(tg_bot, updater, status_avail)
-                    time.sleep(random.uniform(1, 2))
+                    time.sleep(random.uniform(0, 1.5))
                     amazon_query2(tg_bot, updater, status_avail)
-                    time.sleep(random.uniform(1, 2))
+                    time.sleep(random.uniform(0, 1.5))
                     mediamarkt_query(tg_bot, updater)
-                    time.sleep(random.uniform(1, 2))
+                    time.sleep(random.uniform(0, 1))
+                    saturn_query(tg_bot, updater)
+                    time.sleep(random.uniform(0, 1))
+                    saturn2_query(tg_bot, updater)
+                    time.sleep(random.uniform(0, 1))
                     #otto_query(tg_bot, updater)
                     #time.sleep(random.uniform(1, 2))
                     #euronics_query(tg_bot, updater)
