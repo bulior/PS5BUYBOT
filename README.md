@@ -2,11 +2,7 @@
 Python PS5 Web crawler with auto buy option<br>
 Version 1.8 2021-02<br><br>
 Now it queries the following merchants:<br>
-Amazon[DE]<br>
-Saturn[DE]<br>
-Mediamarkt[DE]<br>
-Euronics[DE]<br>
-GameStop[DE]<br>
+Amazon[DE]; Saturn[DE]; Mediamarkt[DE]; Euronics[DE]; GameStop[DE]<br>
 
 
 This is one easy way to check differnt Retailers and buy automaticly e.g. the PS5 / PS5 digi.<br>
