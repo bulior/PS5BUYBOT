@@ -4,7 +4,7 @@ Python PS5 Web crawler with auto buy option<br>
 Version 2.0 2021-02-14<br><br>
 - new
 Amazon captcha solving
-- updated Retailers:
+- updated Retailers:<br>
 Amazon[DE] PS5 digi - auto buy<br>
 Amazon[DE] PS5 disc - auto buy<br>
 Amazon[FR] PS5 digi - info<br>
