@@ -1,10 +1,10 @@
-# V1.8
+
+# V2.0
 # BuyBot PS5 - Auto Buy on Amazon
 # https://github.com/bulior/PS5BUYBOT
 # -------------------------------------
 # If you change something, let me know ;)
 # -------------------------------------
-
 
 import random
 import time
@@ -18,6 +18,8 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (Updater, CommandHandler, CallbackQueryHandler, ConversationHandler, CallbackContext)
 
 import configparser
+
+from amazoncaptcha import AmazonCaptcha
 
 # Load Configs
 config = configparser.ConfigParser()
@@ -76,12 +78,133 @@ def initialize_webdriver():
     global action
     global browser
     print(colored("Initializing Browser...", 'blue'))
-    #option = webdriver.ChromeOptions()
+    chrome_options  = webdriver.ChromeOptions()
+    chrome_options.add_argument("--incognito")
     #option.add_argument('headless')
-    browser = webdriver.Chrome(chrompath)  # initialize browser app
-    browser.get('http://www.amazon.de')  # open url
-    cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
-    cookies.click()
+    browser = webdriver.Chrome(chrompath, options=chrome_options )  # initialize browser app
+
+    browser.get('https://www.amazon.de')
+    textcaptcha = "Geben Sie die angezeigten Zeichen"
+    if (textcaptcha in browser.page_source):
+        captcha = AmazonCaptcha.fromdriver(browser)
+        solution = captcha.solve()
+        while solution == "Not solved":
+            browser.get("https://www.amazon.de")
+            captcha = AmazonCaptcha.fromdriver(browser)
+            solution = captcha.solve()
+            print(colored("[Amazon DE] captcha: ", "red") + colored(solution, "red"))
+            time.sleep(1)
+        print(colored("[Amazon DE] captcha: ", "red") + colored(solution, "green"))
+        captchalist = list(solution)
+        for i in range(len(captchalist)):
+            captchasolving = browser.find_element_by_xpath('//*[@id="captchacharacters"]')
+            captchasolving.send_keys(str(captchalist[i]))
+            time.sleep(random.uniform(0, 1))
+        print(colored("[Amazon DE] captcha: ", "red") + colored("solved", "green"))
+        time.sleep(1)
+        captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Weiter shoppen"]')
+        captchasubmit.click()
+        browser.get('https://www.amazon.de')
+        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        cookies.click()
+        time.sleep(0.5)
+    else:
+        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        cookies.click()
+        time.sleep(0.5)
+
+    browser.get('https://www.amazon.fr')
+    textcaptcha = "Saisissez les caractères"
+    if (textcaptcha in browser.page_source):
+        captcha = AmazonCaptcha.fromdriver(browser)
+        solution = captcha.solve()
+        while solution == "Not solved":
+            browser.get("https://www.amazon.fr")
+            captcha = AmazonCaptcha.fromdriver(browser)
+            solution = captcha.solve()
+            print(colored("[Amazon FR] captcha: ", "red") + colored(solution, "red"))
+            time.sleep(1)
+        print(colored("[Amazon FR] captcha: ", "red") + colored(solution, "green"))
+        captchalist = list(solution)
+        for i in range(len(captchalist)):
+            captchasolving = browser.find_element_by_xpath('//*[@id="captchacharacters"]')
+            captchasolving.send_keys(str(captchalist[i]))
+            time.sleep(random.uniform(0, 1))
+        print(colored("[Amazon FR] captcha: ", "red") + colored("solved", "green"))
+        time.sleep(1)
+        captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Continuer les achats"]')
+        captchasubmit.click()
+        browser.get('http://www.amazon.fr')  # open url
+        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        cookies.click()
+        time.sleep(0.5)
+    else:
+        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        cookies.click()
+        time.sleep(0.5)
+
+    browser.get('https://www.amazon.es')
+    textcaptcha = "Teclea los caracteres"
+    if (textcaptcha in browser.page_source):
+        captcha = AmazonCaptcha.fromdriver(browser)
+        solution = captcha.solve()
+        while solution == "Not solved":
+            browser.get("https: // www.amazon.es")
+            captcha = AmazonCaptcha.fromdriver(browser)
+            solution = captcha.solve()
+            print(colored("[Amazon ES] captcha: ", "red") + colored(solution, "red"))
+            time.sleep(1)
+        print(colored("[Amazon ES] captcha: ", "red") + colored(solution, "green"))
+        captchalist = list(solution)
+        for i in range(len(captchalist)):
+            captchasolving = browser.find_element_by_xpath('//*[@id="captchacharacters"]')
+            captchasolving.send_keys(str(captchalist[i]))
+            time.sleep(random.uniform(0, 1))
+        print(colored("[Amazon ES] captcha: ", "red") + colored("solved", "green"))
+        time.sleep(1)
+        captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Seguir comprando"]')
+        captchasubmit.click()
+        browser.get('http://www.amazon.es')  # open url
+        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        cookies.click()
+        time.sleep(0.5)
+    else:
+        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        cookies.click()
+        time.sleep(0.5)
+
+
+    browser.get('https://www.amazon.it')
+    textcaptcha = "Digita i caratteri"
+    if (textcaptcha in browser.page_source):
+        captcha = AmazonCaptcha.fromdriver(browser)
+        solution = captcha.solve()
+        while solution == "Not solved":
+            browser.get("https: // www.amazon.it")
+            captcha = AmazonCaptcha.fromdriver(browser)
+            solution = captcha.solve()
+            print(colored("[Amazon IT] captcha: ", "red") + colored(solution, "red"))
+            time.sleep(1)
+        print(colored("[Amazon IT] captcha: ", "red") + colored(solution, "green"))
+        captchalist = list(solution)
+        for i in range(len(captchalist)):
+            captchasolving = browser.find_element_by_xpath('//*[@id="captchacharacters"]')
+            captchasolving.send_keys(str(captchalist[i]))
+            time.sleep(random.uniform(0, 1))
+        print(colored("[Amazon IT] captcha: ", "red") + colored("solved", "green"))
+        time.sleep(1)
+        captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Continua con gli acquisti"]')
+        captchasubmit.click()
+        browser.get('http://www.amazon.it')  # open url
+        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        cookies.click()
+        time.sleep(0.5)
+    else:
+        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        cookies.click()
+        time.sleep(0.5)
+
+
     action = ActionChains(browser)
     assert "Amazon" in browser.title  # check if name is in title and page is loaded
     time.sleep(3)
@@ -173,34 +296,67 @@ def stopping(update: Update, context: CallbackContext, browser_runnging) -> int:
         msg = "Closed! Re /start ?"
         message.edit_text(msg)
 
+def anticaptcha(update: Update, context: CallbackContext):
+    browser.get('https://www.amazon.com/errors/validateCaptcha')
+    captcha = AmazonCaptcha.fromdriver(browser)
+    solution = captcha.solve()
+
 
 # ---- QUERYS AND BUY PROCESS ---
 
-def amazon_query(update: Update, context: CallbackContext, status_avail):
+def amazon_disc_DE(update: Update, context: CallbackContext, status_avail):
     # ------  PS5  -------
     text = "Derzeit nicht verfügbar"
     text2 = "Currently Unavailable"
     text3 = "Choose a delivery address"
     text4 = "Wählen Sie eine Lieferadresse"
-
-    browser.get("https://amzn.to/2HtaCXP")
-    time.sleep(0.2)
-    ps5digi = browser.find_element_by_xpath('//button[normalize-space()="PS5"]')
-    ps5digi.click()
-    time.sleep(1.8)
-
+    querylink="https://amzn.to/33yATep"
+    browser.get(querylink)
+    textcaptcha = "Geben Sie die angezeigten Zeichen"
+    if (textcaptcha in browser.page_source):
+        captcha = AmazonCaptcha.fromdriver(browser)
+        solution = captcha.solve()
+        print(colored("[Amazon DE] captcha: ", "red") + solution)
+        captchalist = list(solution)
+        time.sleep(1)
+        while solution == "Not solved":
+            browser.get(querylink)
+            captcha = AmazonCaptcha.fromdriver(browser)
+            solution = captcha.solve()
+            print(colored("[Amazon DE] captcha: ", "red") + colored(solution, "red"))
+            time.sleep(1)
+        print(colored("[Amazon DE] captcha: ", "red") + colored(solution, "green"))
+        captchalist = list(solution)
+        time.sleep(1)
+        for i in range(len(captchalist)):
+            captchasolving = browser.find_element_by_xpath('//*[@id="captchacharacters"]')
+            captchasolving.send_keys(str(captchalist[i]))
+            time.sleep(random.uniform(0, 1))
+        print(colored("[Amazon DE] captcha: ", "red") + colored("solved", "green"))
+        time.sleep(1)
+        captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Weiter shoppen"]')
+        captchasubmit.click()
+        browser.get('https://www.amazon.de')
+        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        cookies.click()
+        browser.get(querylink)
+    else:
+        time.sleep(0.5)
+        ps5digi = browser.find_element_by_xpath('//button[normalize-space()="PS5"]')
+        ps5digi.click()
+        time.sleep(1.6)
     if (text in browser.page_source) or (text2 in browser.page_source):
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
-        print(colored(timenow, "blue") + colored("PS5 Disc [Amazon] Unavailable", "red"))
+        print(colored(timenow, "blue") + colored("PS5 Disc [Amazon DE] Unavailable", "red"))
         if status_avail == True:
-            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Disc [Amazon] - Unavailable")
+            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Disc [Amazon DE] - Unavailable")
     else:
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
-        print(colored(timenow, "blue") + colored("PS5 Disc [Amazon] Available!!!!", "green"))
+        print(colored(timenow, "blue") + colored("PS5 Disc [Amazon DE] Available!!!!", "green"))
         tg_bot.send_message(chat_id=tgcid, text="*********************************")
-        tg_bot.send_message(chat_id=tgcid, text="PS5 Disc [Amazon] - Available!!!!")
+        tg_bot.send_message(chat_id=tgcid, text="PS5 Disc [Amazon DE] - Available!!!!")
         time.sleep(1)
         msg = "Status: Login to Amazon"
         tg_bot.send_message(chat_id=tgcid, text=msg)
@@ -277,31 +433,57 @@ def amazon_query(update: Update, context: CallbackContext, status_avail):
                 time.sleep(5)
                 initialize_webdriver()
                 break
-
-def amazon_query2(update: Update, context: CallbackContext, status_avail):
-    # ------  PS5 DIGI -------
+    time.sleep(random.uniform(0, 1.5))
+def amazon_digital_DE(update: Update, context: CallbackContext, status_avail):
+    # ------  PS5  -------
     text = "Derzeit nicht verfügbar"
     text2 = "Currently Unavailable"
     text3 = "Choose a delivery address"
     text4 = "Wählen Sie eine Lieferadresse"
-
-    browser.get("https://amzn.to/33yATep")
-    time.sleep(0.2)
-    ps5normal = browser.find_element_by_xpath('//button[normalize-space()="PS5 - Digital Edition"]')
-    ps5normal.click()
-    time.sleep(1.6)
+    querylink="https://amzn.to/2HtaCXP"
+    browser.get(querylink)
+    textcaptcha = "Geben Sie die angezeigten Zeichen"
+    if (textcaptcha in browser.page_source):
+        captcha = AmazonCaptcha.fromdriver(browser)
+        solution = captcha.solve()
+        while solution == "Not solved":
+            browser.get(querylink)
+            captcha = AmazonCaptcha.fromdriver(browser)
+            solution = captcha.solve()
+            print(colored("[Amazon DE] captcha: ", "red") + colored(solution, "red"))
+            time.sleep(1)
+        print(colored("[Amazon DE] captcha: ", "red") + colored(solution, "green"))
+        captchalist = list(solution)
+        time.sleep(1)
+        for i in range(len(captchalist)):
+            captchasolving = browser.find_element_by_xpath('//*[@id="captchacharacters"]')
+            captchasolving.send_keys(str(captchalist[i]))
+            time.sleep(random.uniform(0, 1))
+        print(colored("[Amazon DE] captcha: ", "red") + colored("solved", "green"))
+        time.sleep(1)
+        captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Weiter shoppen"]')
+        captchasubmit.click()
+        browser.get('https://www.amazon.de')
+        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        cookies.click()
+        browser.get(querylink)
+    else:
+        time.sleep(0.5)
+        ps5digi = browser.find_element_by_xpath('//button[normalize-space()="PS5 - Digital Edition"]')
+        ps5digi.click()
+        time.sleep(1.6)
     if (text in browser.page_source) or (text2 in browser.page_source):
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
-        print(colored(timenow, "blue") + colored("PS5 Digi [Amazon] Unavailable", "red"))
+        print(colored(timenow, "blue") + colored("PS5 Digi [Amazon DE] Unavailable", "red"))
         if status_avail == True:
-            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digi [Amazon] - Unavailable")
+            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digi [Amazon DE] - Unavailable")
     else:
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
-        print(colored(timenow, "blue") + colored("PS5 Digital [Amazon] Available!!!!", "green"))
+        print(colored(timenow, "blue") + colored("PS5 Disc [Amazon DE] Available!!!!", "green"))
         tg_bot.send_message(chat_id=tgcid, text="*********************************")
-        tg_bot.send_message(chat_id=tgcid, text="PS5 Digital [Amazon] - Available!!!!")
+        tg_bot.send_message(chat_id=tgcid, text="PS5 Disc [Amazon DE] - Available!!!!")
         time.sleep(1)
         msg = "Status: Login to Amazon"
         tg_bot.send_message(chat_id=tgcid, text=msg)
@@ -378,9 +560,201 @@ def amazon_query2(update: Update, context: CallbackContext, status_avail):
                 time.sleep(5)
                 initialize_webdriver()
                 break
+    time.sleep(random.uniform(0, 1.5))
+
+def amazon_disc_FR(update: Update, context: CallbackContext, status_avail):
+    # ------  PS5  -------
+    querylink="https://www.amazon.fr/PlayStation-%C3%89dition-Standard-DualSense-Couleur/dp/B08H93ZRK9/ref=sr_1_1?dchild=1&keywords=Ps5+Console&qid=1612890317&sr=8-1"
+    browser.get(querylink)
+    textcaptcha = "Saisissez les caractères"
+    if (textcaptcha in browser.page_source):
+        captcha = AmazonCaptcha.fromdriver(browser)
+        solution = captcha.solve()
+        while solution == "Not solved":
+            browser.get(querylink)
+            captcha = AmazonCaptcha.fromdriver(browser)
+            solution = captcha.solve()
+            print(colored("[Amazon FR] captcha: ", "red") + colored(solution, "red"))
+            time.sleep(1)
+        print(colored("[Amazon FR] captcha: ", "red") + colored(solution, "green"))
+        captchalist = list(solution)
+        time.sleep(1)
+        for i in range(len(captchalist)):
+            captchasolving = browser.find_element_by_xpath('//*[@id="captchacharacters"]')
+            captchasolving.send_keys(str(captchalist[i]))
+            time.sleep(random.uniform(0, 1))
+        print(colored("[Amazon FR] captcha: ", "red") + colored("solved", "green"))
+        time.sleep(1)
+        captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Continuer les achats"]')
+        captchasubmit.click()
+        browser.get(querylink)
+        time.sleep(0.5)
+    else:
+        ps5normal = browser.find_element_by_xpath('//button[normalize-space()="PS5"]')
+        ps5normal.click()
+        time.sleep(1.6)
+        text = "Actuellement indisponible"
+        text2 = "Currently Unavailable"
+        if (text in browser.page_source) or (text2 in browser.page_source):
+            now = datetime.now()
+            timenow = now.strftime("%H-%M-%S: ")
+            print(colored(timenow, "blue") + colored("PS5 Disc [Amazon FR] Unavailable", "red"))
+            if status_avail == True:
+                tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Disc [Amazon FR] - Unavailable")
+        else:
+            now = datetime.now()
+            timenow = now.strftime("%H-%M-%S: ")
+            print(colored(timenow, "blue") + colored("PS5 Disc [Amazon FR] Available!!!!", "green"))
+            tg_bot.send_message(chat_id=tgcid, text="PS5 Disc [Amazon FR] Available!!!!")
+            tg_bot.send_message(chat_id=tgcid, text=querylink)
+            tg_bot.send_message(chat_id=tgcid, text="*********************************")
+            time.sleep(1)
+        time.sleep(random.uniform(0, 1.5))
+def amazon_digital_FR(update: Update, context: CallbackContext, status_avail):
+    # ------  PS5  -------
+    querylink="https://www.amazon.fr/PlayStation-%C3%89dition-Standard-DualSense-Couleur/dp/B08H93ZRK9/ref=sr_1_1?dchild=1&keywords=Ps5+Console&qid=1612890317&sr=8-1"
+    browser.get(querylink)
+    textcaptcha = "Saisissez les caractères"
+    if (textcaptcha in browser.page_source):
+        captcha = AmazonCaptcha.fromdriver(browser)
+        solution = captcha.solve()
+        while solution == "Not solved":
+            browser.get(querylink)
+            captcha = AmazonCaptcha.fromdriver(browser)
+            solution = captcha.solve()
+            print(colored("[Amazon FR] captcha: ", "red") + colored(solution, "red"))
+            time.sleep(1)
+        print(colored("[Amazon FR] captcha: ", "red") + colored(solution, "green"))
+        captchalist = list(solution)
+        time.sleep(1)
+        for i in range(len(captchalist)):
+            captchasolving = browser.find_element_by_xpath('//*[@id="captchacharacters"]')
+            captchasolving.send_keys(str(captchalist[i]))
+            time.sleep(random.uniform(0, 1))
+        print(colored("[Amazon FR] captcha: ", "red") + colored("solved", "green"))
+        time.sleep(1)
+        captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Continuer les achats"]')
+        captchasubmit.click()
+        browser.get(querylink)
+        time.sleep(0.5)
+    else:
+        ps5normal = browser.find_element_by_xpath('//button[normalize-space()="PS5 - Digital Edition"]')
+        ps5normal.click()
+        time.sleep(1.6)
+        text = "Actuellement indisponible"
+        text2 = "Currently Unavailable"
+        if (text in browser.page_source) or (text2 in browser.page_source):
+            now = datetime.now()
+            timenow = now.strftime("%H-%M-%S: ")
+            print(colored(timenow, "blue") + colored("PS5 Digi [Amazon FR] Unavailable", "red"))
+            if status_avail == True:
+                tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digi [Amazon FR] - Unavailable")
+        else:
+            now = datetime.now()
+            timenow = now.strftime("%H-%M-%S: ")
+            print(colored(timenow, "blue") + colored("PS5 Digital [Amazon FR] Available!!!!", "green"))
+            tg_bot.send_message(chat_id=tgcid, text="PS5 Digital [Amazon FR] Available!!!!")
+            tg_bot.send_message(chat_id=tgcid, text=querylink)
+            tg_bot.send_message(chat_id=tgcid, text="*********************************")
+            time.sleep(1)
+        time.sleep(random.uniform(0, 1.5))
+
+def amazon_disc_IT(update: Update, context: CallbackContext, status_avail):
+    # ------  PS5  -------
+    querylink="https://www.amazon.it/Sony-PlayStation-5-Digital-Edition/dp/B08KJF2D25"
+    #https://www.amazon.it/Playstation-Sony-PlayStation-5/dp/B08KKJ37F7/ref=sr_1_1?brr=1&dchild=1&qid=1613215006&rd=1&s=videogames&sr=1-1
+    browser.get(querylink)
+    textcaptcha = "Digita i caratteri"
+    if (textcaptcha in browser.page_source):
+        captcha = AmazonCaptcha.fromdriver(browser)
+        solution = captcha.solve()
+        while solution == "Not solved":
+            browser.get(querylink)
+            captcha = AmazonCaptcha.fromdriver(browser)
+            solution = captcha.solve()
+            print(colored("[Amazon IT] captcha: ", "red") + colored(solution, "red"))
+            time.sleep(1)
+        print(colored("[Amazon IT] captcha: ", "red") + colored(solution, "green"))
+        captchalist = list(solution)
+        time.sleep(1)
+        for i in range(len(captchalist)):
+            captchasolving = browser.find_element_by_xpath('//*[@id="captchacharacters"]')
+            captchasolving.send_keys(str(captchalist[i]))
+            time.sleep(random.uniform(0, 1))
+        print(colored("[Amazon IT] captcha: ", "red") + colored("solved", "green"))
+        time.sleep(1)
+        captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Continua con gli acquisti"]')
+        captchasubmit.click()
+        browser.get(querylink)
+        time.sleep(0.5)
+    else:
+        time.sleep(1.6)
+        text = "Non disponibile"
+        text2 = "Currently Unavailable"
+        if (text in browser.page_source) or (text2 in browser.page_source):
+            now = datetime.now()
+            timenow = now.strftime("%H-%M-%S: ")
+            print(colored(timenow, "blue") + colored("PS5 Disc [Amazon IT] Unavailable", "red"))
+            if status_avail == True:
+                tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Disc [Amazon IT] - Unavailable")
+        else:
+            now = datetime.now()
+            timenow = now.strftime("%H-%M-%S: ")
+            print(colored(timenow, "blue") + colored("PS5 Disc [Amazon IT] Available!!!!", "green"))
+            tg_bot.send_message(chat_id=tgcid, text="PS5 Disc [Amazon IT] Available!!!!")
+            tg_bot.send_message(chat_id=tgcid, text=querylink)
+            tg_bot.send_message(chat_id=tgcid, text="*********************************")
+            time.sleep(1)
+        time.sleep(random.uniform(0, 1.5))
+def amazon_digital_IT(update: Update, context: CallbackContext, status_avail):
+    # ------  PS5  -------
+    querylink="https://www.amazon.it/Playstation-Sony-PlayStation-5/dp/B08KKJ37F7/ref=sr_1_1?brr=1&dchild=1&qid=1613215006&rd=1&s=videogames&sr=1-1"
+    browser.get(querylink)
+    textcaptcha = "Digita i caratteri"
+    if (textcaptcha in browser.page_source):
+        captcha = AmazonCaptcha.fromdriver(browser)
+        solution = captcha.solve()
+        while solution == "Not solved":
+            browser.get(querylink)
+            captcha = AmazonCaptcha.fromdriver(browser)
+            solution = captcha.solve()
+            print(colored("[Amazon IT] captcha: ", "red") + colored(solution, "red"))
+            time.sleep(1)
+        print(colored("[Amazon IT] captcha: ", "red") + colored(solution, "green"))
+        captchalist = list(solution)
+        time.sleep(1)
+        for i in range(len(captchalist)):
+            captchasolving = browser.find_element_by_xpath('//*[@id="captchacharacters"]')
+            captchasolving.send_keys(str(captchalist[i]))
+            time.sleep(random.uniform(0, 1))
+        print(colored("[Amazon IT] captcha: ", "red") + colored("solved", "green"))
+        time.sleep(1)
+        captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Continua con gli acquisti"]')
+        captchasubmit.click()
+        browser.get(querylink)
+        time.sleep(0.5)
+    else:
+        time.sleep(1.6)
+        text = "Non disponibile"
+        text2 = "Currently Unavailable"
+        if (text in browser.page_source) or (text2 in browser.page_source):
+            now = datetime.now()
+            timenow = now.strftime("%H-%M-%S: ")
+            print(colored(timenow, "blue") + colored("PS5 Digi [Amazon IT] Unavailable", "red"))
+            if status_avail == True:
+                tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digi [Amazon IT] - Unavailable")
+        else:
+            now = datetime.now()
+            timenow = now.strftime("%H-%M-%S: ")
+            print(colored(timenow, "blue") + colored("PS5 Digi [Amazon IT] Available!!!!", "green"))
+            tg_bot.send_message(chat_id=tgcid, text="PS5 Digi [Amazon IT] Available!!!!")
+            tg_bot.send_message(chat_id=tgcid, text=querylink)
+            tg_bot.send_message(chat_id=tgcid, text="*********************************")
+            time.sleep(1)
+        time.sleep(random.uniform(0, 1.5))
 
 def mediamarkt_query(update: Update, context: CallbackContext):
-    text = "Dieser Artikel ist aktuell nicht verfügbar"
+    text = "nicht verfügbar"
     text2 = "add to card"
     text3 = "Choose a delivery address"
     text4 = "Wählen Sie eine Lieferadresse"
@@ -408,11 +782,11 @@ def mediamarkt_query(update: Update, context: CallbackContext):
     else:
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
-        print(colored(timenow, "blue") + colored("PS5 Digital [Mediamarkt] Unavailable", "red"))
+        print(colored(timenow, "blue") + colored("PS5 Digi [Mediamarkt] Unavailable", "red"))
         if status_avail == True:
-            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digital [Mediamarkt] - Unavailable")
+            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digi [Mediamarkt] - Unavailable")
 
-def saturn_query(update: Update, context: CallbackContext):
+def saturn_disc(update: Update, context: CallbackContext):
     text = "Dieser Artikel ist aktuell nicht verfügbar"
     text2 = "add to card"
     text3 = "Choose a delivery address"
@@ -444,8 +818,7 @@ def saturn_query(update: Update, context: CallbackContext):
         print(colored(timenow, "blue") + colored("PS5 Disc [SATURN] Unavailable", "red"))
         if status_avail == True:
             tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Disc [Saturn] - Unavailable")
-
-def saturn2_query(update: Update, context: CallbackContext):
+def saturn_digital(update: Update, context: CallbackContext):
     text = "Dieser Artikel ist aktuell nicht verfügbar"
     text2 = "add to card"
     text3 = "Choose a delivery address"
@@ -474,12 +847,12 @@ def saturn2_query(update: Update, context: CallbackContext):
     else:
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
-        print(colored(timenow, "blue") + colored("PS5 Digital [SATURN] Unavailable", "red"))
+        print(colored(timenow, "blue") + colored("PS5 Digi [SATURN] Unavailable", "red"))
         if status_avail == True:
-            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digital [Saturn] - Unavailable")
+            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digi [Saturn] - Unavailable")
 
-def otto_query(update: Update, context: CallbackContext):
-    text = "Aktuell ist die PlayStation 5 auf otto.de leider ausverkauft"
+def otto_digital(update: Update, context: CallbackContext):
+    text = "leider ausverkauft"
     browser.get("https://www.otto.de/technik/gaming/playstation/ps5/")
     if not (text in browser.page_source) :
         now = datetime.now()
@@ -492,14 +865,15 @@ def otto_query(update: Update, context: CallbackContext):
     else:
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
-        print(colored(timenow, "blue") + colored("PS5 Digital [Otto] Unavailable", "red"))
+        print(colored(timenow, "blue") + colored("PS5 Digi [Otto] Unavailable", "red"))
         if status_avail == True:
-            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digital [Otto] - Unavailable")
+            tg_bot.send_message(chat_id=tgcid, text=timenow + " PS5 Digi [Otto] - Unavailable")
 
 def euronics_query(update: Update, context: CallbackContext):
-    text = "Vorverkauf wurde beendet"
+    text = "nicht verfügbar"
     browser.get("https://www.euronics.de/spiele-und-konsolen-film-und-musik/spiele-und-konsolen/playstation-5/spielekonsole/playstation-5-digital-edition-konsole-4061856837833")
-    if not (text in browser.page_source) :
+    time.sleep(1.8)
+    if not (text in browser.page_source):
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
         print(colored(timenow, "blue") + colored("PS5 Digital [Euronics] - Available!!!!", "green"))
@@ -512,10 +886,10 @@ def euronics_query(update: Update, context: CallbackContext):
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
         print(colored(timenow, "blue") + colored("PS5 Digital [Euronics] Unavailable", "red"))
-
 def gamestop_query(update: Update, context: CallbackContext):
     text = "Leider sind keine Playstation 5 mehr verfügbar"
     browser.get("https://www.gamestop.de/PS5/Index")
+    time.sleep(1.8)
     if not (text in browser.page_source) :
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
@@ -529,7 +903,6 @@ def gamestop_query(update: Update, context: CallbackContext):
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
         print(colored(timenow, "blue") + colored("PS5 Digital [Gamestop] Unavailable", "red"))
-
 
 # ---- Amazon item in stock ---
 def amazon_instock_info(update: Update, context: CallbackContext, preis) -> int:
@@ -580,21 +953,25 @@ while v == 1:
                     if tg_bot.get_updates(offset=offset)[-1].message.text == "/status":
                         status_avail = True
                         tg_bot.send_message(chat_id=tgcid, text=f"Status: n= {a} /end messaging")
-                    amazon_query(tg_bot, updater, status_avail)
-                    time.sleep(random.uniform(0, 1.5))
-                    amazon_query2(tg_bot, updater, status_avail)
-                    time.sleep(random.uniform(0, 1.5))
+
+                    amazon_disc_DE(tg_bot, updater, status_avail)
+                    amazon_digital_DE(tg_bot, updater, status_avail)
+                    amazon_disc_FR(tg_bot, updater, status_avail)
+                    amazon_digital_FR(tg_bot, updater, status_avail)
+                    amazon_disc_IT(tg_bot, updater, status_avail)
+                    amazon_digital_IT(tg_bot, updater, status_avail)
+
                     mediamarkt_query(tg_bot, updater)
-                    time.sleep(random.uniform(0, 1))
-                    saturn_query(tg_bot, updater)
-                    time.sleep(random.uniform(0, 1))
-                    saturn2_query(tg_bot, updater)
-                    time.sleep(random.uniform(0, 1))
-                    #otto_query(tg_bot, updater)
-                    #time.sleep(random.uniform(1, 2))
-                    #euronics_query(tg_bot, updater)
-                    #time.sleep(random.uniform(1, 2))
-                    #gamestop_query(tg_bot, updater)
+                    #saturn_disc(tg_bot, updater)
+
+                    time.sleep(random.uniform(0, 2))
+                    #saturn_digital(tg_bot, updater)
+                    time.sleep(random.uniform(0, 2))
+                    otto_digital(tg_bot, updater)
+                    time.sleep(random.uniform(0, 2))
+                    euronics_query(tg_bot, updater)
+                    time.sleep(random.uniform(1, 2))
+                    gamestop_query(tg_bot, updater)
                     now = datetime.now()
                     timenow = now.strftime("%H-%M-%S: ")
                     text = f"----- n: {a} -----"
