@@ -1,10 +1,9 @@
-# V2.2
+# V2.2 added captcha solving and some Amazon EU-Stores - autobuy Germany
 # BuyBot PS5 - Auto Buy on Amazon
 # https://github.com/bulior/PS5BUYBOT
 # -------------------------------------
 # If you change something, let me know ;)
 # -------------------------------------
-
 import random
 import time
 from selenium import webdriver
@@ -413,8 +412,8 @@ def amazon_disc_DE(update: Update, context: CallbackContext, status_avail):
                     adresscheckout.click()
                     time.sleep(2)
                 else:
-                    #gobuy = browser.find_element_by_xpath('//*[@id="submitOrderButtonId"]')
-                    #gobuy.click()
+                    gobuy = browser.find_element_by_xpath('//*[@id="submitOrderButtonId"]')
+                    gobuy.click()
                     time.sleep(2)
                     now = datetime.now()  # current date and time
                     timenow = now.strftime("%H-%M-%S")
@@ -546,8 +545,8 @@ def amazon_digital_DE(update: Update, context: CallbackContext, status_avail):
                     adresscheckout.click()
                     time.sleep(2)
                 else:
-                    # gobuy = browser.find_element_by_xpath('//*[@id="submitOrderButtonId"]')
-                    # gobuy.click()
+                    gobuy = browser.find_element_by_xpath('//*[@id="submitOrderButtonId"]')
+                    gobuy.click()
                     time.sleep(2)
                     now = datetime.now()  # current date and time
                     timenow = now.strftime("%H-%M-%S")
