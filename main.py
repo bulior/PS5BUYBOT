@@ -1,4 +1,4 @@
-# V2.1
+# V2.2
 # BuyBot PS5 - Auto Buy on Amazon
 # https://github.com/bulior/PS5BUYBOT
 # -------------------------------------
@@ -338,14 +338,14 @@ def amazon_disc_DE(update: Update, context: CallbackContext, status_avail):
         captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Weiter shoppen"]')
         captchasubmit.click()
         browser.get('https://www.amazon.de')
-        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
-        cookies.click()
+        #cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        #cookies.click()
         browser.get(querylink)
     else:
         time.sleep(0.5)
         ps5digi = browser.find_element_by_xpath('//button[normalize-space()="PS5"]')
         ps5digi.click()
-        time.sleep(1.6)
+        time.sleep(1.8)
     if (text in browser.page_source) or (text2 in browser.page_source):
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
@@ -356,27 +356,32 @@ def amazon_disc_DE(update: Update, context: CallbackContext, status_avail):
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
         print(colored(timenow, "blue") + colored("PS5 Disc [Amazon DE] Available!!!!", "green"))
-        tg_bot.send_message(chat_id=tgcid, text="*********************************")
-        tg_bot.send_message(chat_id=tgcid, text="PS5 Disc [Amazon DE] - Available!!!!")
-        time.sleep(1)
-        msg = "Status: Login to Amazon"
-        tg_bot.send_message(chat_id=tgcid, text=msg)
-        log_in(browser, action, amazonuser, amazonpw)
-        msg = "Status: Successful loged in on Amazon"
-        tg_bot.send_message(chat_id=tgcid, text=msg)
-        browser.get("https://www.amazon.de/-/en/dp/B08H99BPJN/ref=twister_B08JVHJNHG?_encoding=UTF8&psc=1")
+        preis = browser.find_element_by_xpath('//*[@id="priceblock_ourprice"]').text
+        # Add to Card
         addtocard = browser.find_element_by_xpath('//*[@id="add-to-cart-button"]')
         addtocard.click()
-        wait_basket = True
+        print("Added to Card!")
+        # Info
+        tg_bot.send_message(chat_id=tgcid, text="************* PS5 Disc ***************")
+        tg_bot.send_message(chat_id=tgcid, text="PS5 Disc [Amazon DE] - Available!!!!")
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S")
         imagename1 = timenow + "img.png"
         browser.save_screenshot(imagename1)
         tg_bot.send_chat_action(chat_id=tgcid, action=tg.ChatAction.TYPING)
         tg_bot.send_document(chat_id=tgcid, document=open(imagename1, "rb"))
-        preis = browser.find_element_by_xpath('//*[@id="priceblock_ourprice"]').text
+        # preis = browser.find_element_by_xpath('//*[@id="priceblock_ourprice"]').text
         amazon_instock_info(tg_bot, updater, preis)  # telegram buy request
-        while True:
+        time.sleep(1)
+        # Login to Amazon
+        msg = "Status: Login to Amazon"
+        tg_bot.send_message(chat_id=tgcid, text=msg)
+        log_in(browser, action, amazonuser, amazonpw)
+        msg = "Status: Successful loged in on Amazon"
+        tg_bot.send_message(chat_id=tgcid, text=msg)
+
+        wait_basket = True
+        while True: # Einkaufs
             buynow = wait_basket
             time.sleep(1)
             tg_command = tg_bot.get_updates(offset=offset)[-1].message.text
@@ -384,9 +389,7 @@ def amazon_disc_DE(update: Update, context: CallbackContext, status_avail):
             if tg_command == "/buy":
                 tg_bot.send_message(chat_id=tgcid, text='Okay ich werde den Kauf veranlassen')
                 tg_bot.send_message(chat_id=tgcid, text='Artikel im Warenkorb:')
-                gotobasked = browser.find_element_by_xpath(
-                    '//*[@id="attach-sidesheet-view-cart-button"]')
-                gotobasked.click()
+                browser.get("https://www.amazon.de/gp/cart/view.html?ref_=nav_cart")
                 now = datetime.now()  # current date and time
                 timenow = now.strftime("%H-%M-%S")
                 image_basked = timenow + "img_basked.png"
@@ -441,12 +444,15 @@ def amazon_digital_DE(update: Update, context: CallbackContext, status_avail):
     text2 = "Currently Unavailable"
     text3 = "Choose a delivery address"
     text4 = "Wählen Sie eine Lieferadresse"
-    querylink="https://amzn.to/2HtaCXP"
+    querylink = "https://amzn.to/33yATep"
     browser.get(querylink)
     textcaptcha = "Geben Sie die angezeigten Zeichen"
     if (textcaptcha in browser.page_source):
         captcha = AmazonCaptcha.fromdriver(browser)
         solution = captcha.solve()
+        print(colored("[Amazon DE] captcha: ", "red") + solution)
+        captchalist = list(solution)
+        time.sleep(1)
         while solution == "Not solved":
             browser.get(querylink)
             captcha = AmazonCaptcha.fromdriver(browser)
@@ -465,14 +471,14 @@ def amazon_digital_DE(update: Update, context: CallbackContext, status_avail):
         captchasubmit = browser.find_element_by_xpath('//button[normalize-space()="Weiter shoppen"]')
         captchasubmit.click()
         browser.get('https://www.amazon.de')
-        cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
-        cookies.click()
+        #cookies = browser.find_element_by_xpath('//*[@id="sp-cc-accept"]')
+        #cookies.click()
         browser.get(querylink)
     else:
         time.sleep(0.5)
         ps5digi = browser.find_element_by_xpath('//button[normalize-space()="PS5 - Digital Edition"]')
         ps5digi.click()
-        time.sleep(1.6)
+        time.sleep(1.8)
     if (text in browser.page_source) or (text2 in browser.page_source):
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
@@ -482,28 +488,33 @@ def amazon_digital_DE(update: Update, context: CallbackContext, status_avail):
     else:
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S: ")
-        print(colored(timenow, "blue") + colored("PS5 Disc [Amazon DE] Available!!!!", "green"))
-        tg_bot.send_message(chat_id=tgcid, text="*********************************")
-        tg_bot.send_message(chat_id=tgcid, text="PS5 Disc [Amazon DE] - Available!!!!")
-        time.sleep(1)
-        msg = "Status: Login to Amazon"
-        tg_bot.send_message(chat_id=tgcid, text=msg)
-        log_in(browser, action, amazonuser, amazonpw)
-        msg = "Status: Successful loged in on Amazon"
-        tg_bot.send_message(chat_id=tgcid, text=msg)
-        browser.get("https://www.amazon.de/-/en/dp/B08H99BPJN/ref=twister_B08JVHJNHG?_encoding=UTF8&psc=1")
+        print(colored(timenow, "blue") + colored("PS5 Digi [Amazon DE] Available!!!!", "green"))
+        preis = browser.find_element_by_xpath('//*[@id="priceblock_ourprice"]').text
+        # Add to Card
         addtocard = browser.find_element_by_xpath('//*[@id="add-to-cart-button"]')
         addtocard.click()
-        wait_basket = True
+        print("Added to Card!")
+        # Info
+        tg_bot.send_message(chat_id=tgcid, text="************* PS5 Digi ***************")
+        tg_bot.send_message(chat_id=tgcid, text="PS5 Digi [Amazon DE] - Available!!!!")
         now = datetime.now()
         timenow = now.strftime("%H-%M-%S")
         imagename1 = timenow + "img.png"
         browser.save_screenshot(imagename1)
         tg_bot.send_chat_action(chat_id=tgcid, action=tg.ChatAction.TYPING)
         tg_bot.send_document(chat_id=tgcid, document=open(imagename1, "rb"))
-        preis = browser.find_element_by_xpath('//*[@id="priceblock_ourprice"]').text
+        # preis = browser.find_element_by_xpath('//*[@id="priceblock_ourprice"]').text
         amazon_instock_info(tg_bot, updater, preis)  # telegram buy request
-        while True:
+        time.sleep(1)
+        # Login to Amazon
+        msg = "Status: Login to Amazon"
+        tg_bot.send_message(chat_id=tgcid, text=msg)
+        log_in(browser, action, amazonuser, amazonpw)
+        msg = "Status: Successful loged in on Amazon"
+        tg_bot.send_message(chat_id=tgcid, text=msg)
+
+        wait_basket = True
+        while True:  # Einkaufs
             buynow = wait_basket
             time.sleep(1)
             tg_command = tg_bot.get_updates(offset=offset)[-1].message.text
@@ -511,9 +522,7 @@ def amazon_digital_DE(update: Update, context: CallbackContext, status_avail):
             if tg_command == "/buy":
                 tg_bot.send_message(chat_id=tgcid, text='Okay ich werde den Kauf veranlassen')
                 tg_bot.send_message(chat_id=tgcid, text='Artikel im Warenkorb:')
-                gotobasked = browser.find_element_by_xpath(
-                    '//*[@id="attach-sidesheet-view-cart-button"]')
-                gotobasked.click()
+                browser.get("https://www.amazon.de/gp/cart/view.html?ref_=nav_cart")
                 now = datetime.now()  # current date and time
                 timenow = now.strftime("%H-%M-%S")
                 image_basked = timenow + "img_basked.png"
@@ -537,8 +546,8 @@ def amazon_digital_DE(update: Update, context: CallbackContext, status_avail):
                     adresscheckout.click()
                     time.sleep(2)
                 else:
-                    #gobuy = browser.find_element_by_xpath('//*[@id="submitOrderButtonId"]')
-                    #gobuy.click()
+                    # gobuy = browser.find_element_by_xpath('//*[@id="submitOrderButtonId"]')
+                    # gobuy.click()
                     time.sleep(2)
                     now = datetime.now()  # current date and time
                     timenow = now.strftime("%H-%M-%S")
