@@ -1,11 +1,9 @@
-
-# V2.0
+# V2.1
 # BuyBot PS5 - Auto Buy on Amazon
 # https://github.com/bulior/PS5BUYBOT
 # -------------------------------------
 # If you change something, let me know ;)
 # -------------------------------------
-
 
 import random
 import time
@@ -37,13 +35,13 @@ imgpath = config['pathes']['imgpath']
 debugging = True
 
 
-# ----- Links to check -----
+# ----- Links to check - old not used-----
 query_links = ["https://www.amazon.de/Sony-PlayStation-5-Digital-Edition/dp/B08H98GVK8?tag=mmo-deals-21",
                "https://www.mediamarkt.de/de/product/_sony-playstation%C2%AE5-digital-edition-2661939.html",
                # "https://www.amazon.de/-/en/gp/product/B08H99BPJN/ref=ox_sc_saved_title_1?smid=A3JWKAKR8XB7XF&psc=1"
                ]
 
-# ----- How many loops -----
+# ----- How many loops - old not used -----
 loop_n_max = 120
 global_loop_n = 0
 processbar_text = "none - try later"
@@ -53,7 +51,7 @@ global wait_basket
 wait_basket = True
 
 
-# ---- Progressbar ---
+# ---- Progressbar - old not used ---
 def progressBar(x, iterable, prefix='', suffix='', decimals=1, length=loop_n_max, fill='█', printEnd="\n"):
     total = iterable
     # Progress Bar Printing Function
@@ -64,15 +62,6 @@ def progressBar(x, iterable, prefix='', suffix='', decimals=1, length=loop_n_max
     global processbar_text
     processbar_text = (f'\r{prefix} |{bar}| {percent}% {suffix}')
     return processbar_text
-
-def initialize_telegram(tgtoken, tgcid):
-    print(colored("Initializing Telegram...", 'blue'))
-    tg_bot = tg.Bot(token=tgtoken)
-    # updater = Updater(tgtoken)
-    time.sleep(1)
-    print(colored("Deleting all previous updates...", 'blue'))
-    offset = tg_bot.get_updates()[-1].update_id
-    return tg_bot, tgcid, offset
 
 # --- START CHROME ---
 def initialize_webdriver():
@@ -216,6 +205,15 @@ def initialize_webdriver():
     return browser
 
 # ----TELEGRAM BOT startup ---
+def initialize_telegram(tgtoken, tgcid):
+    print(colored("Initializing Telegram...", 'blue'))
+    tg_bot = tg.Bot(token=tgtoken)
+    # updater = Updater(tgtoken)
+    time.sleep(1)
+    print(colored("Deleting all previous updates...", 'blue'))
+    offset = tg_bot.get_updates()[-1].update_id
+    return tg_bot, tgcid, offset
+
 def bot_startupmessage(update: Update, context: CallbackContext) -> int:
     # Welcome message
     msg = "--- Amazon BuyBot startup ---\n"
@@ -234,6 +232,8 @@ def bot_startupmessage(update: Update, context: CallbackContext) -> int:
     # Send the message with menu
     tg_bot.send_message(chat_id=tgcid, text=msg, reply_markup=reply_kb_markup)
     tg_bot.send_chat_action(chat_id=tgcid, action=tg.ChatAction.TYPING)
+
+# ---- some defs ---
 
 def getquery(update: Update, context: CallbackContext):
     for x in range(len(query_links)):
