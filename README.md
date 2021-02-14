@@ -1,6 +1,25 @@
 # PS5BUYBOT
 Python PS5 Web crawler with auto buy option<br>
-Version 1.8 2021-02<br><br>
+<br>
+Version 2.0 2021-02-14<br><br>
+- new
+Amazon captcha solving
+- updated Retailers:
+Amazon[DE] PS5 digi - auto buy<br>
+Amazon[DE] PS5 disc - auto buy<br>
+Amazon[FR] PS5 digi - info<br>
+Amazon[FR] PS5 disc - info<br>
+Amazon[IT] PS5 digi - info<br>
+Amazon[IT] PS5 disc - info<br>
+Saturn[DE] - info<br>
+Mediamarkt[DE] - info<br>
+Euronics[DE] - info<br>
+GameStop[DE] - info<br>
+
+
+
+<br>
+Version 1.8 2021-02-06<br><br>
 Now it queries the following merchants:<br>
 Amazon[DE]; Saturn[DE]; Mediamarkt[DE]; Euronics[DE]; GameStop[DE]<br>
 
